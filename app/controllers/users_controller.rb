@@ -44,4 +44,8 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
+  
+  def feed_microposts
+    Micropost.where(user_id: self.followings_ids + [self.id])
+  end
 end
