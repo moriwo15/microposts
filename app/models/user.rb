@@ -32,7 +32,6 @@ class User < ApplicationRecord
   
   has_many :favorites
   has_many :likes, through: :favorites, source: :micropost
-  has_many :reverses_of_favorites, class_name: 'Favorites',foreign_key: 'micropost_id'
   
   def favorite(micropost)
     self.favorites.find_or_create_by(micropost_id: micropost.id)
@@ -40,7 +39,7 @@ class User < ApplicationRecord
   
   def unfavorite(micropost)
     fav = self.favorites.find_by(micropost_id: micropost.id)
-    fav.destroy if micropost
+    fav.destroy if fav
   end
   
   def likes?(micropost)
